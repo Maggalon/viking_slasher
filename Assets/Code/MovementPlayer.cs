@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class MovementPlayer : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    private float jumpForce = 7f;
+    private float moveSpeed = 5f;
+
 
     private Rigidbody2D rb;
     private Vector2 movement;
     private Animator anim;
     private SpriteRenderer sr;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,6 +29,7 @@ public class MovementPlayer : MonoBehaviour
     {
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime); 
         anim.SetFloat("Horizontal", Mathf.Abs(movement.x));
+        anim.SetFloat("Vertical", Mathf.Abs(movement.y));
     }
 
     void Flex() // хуйня чтобы чел мог влево и вправо двигаться с анимкой
