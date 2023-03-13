@@ -8,6 +8,8 @@ public class MovementEnemy : MonoBehaviour
     private int positionOfPatrol = 5;
     public Transform point;
     private bool movingRight;
+    
+    public AudioSource dead;
 
     void Start()
     {
@@ -22,7 +24,7 @@ public class MovementEnemy : MonoBehaviour
         }
         
     }
-
+    
     void Chill()
     {
         if (transform.position.x > point.position.x + positionOfPatrol)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Combat : MonoBehaviour
 {
@@ -14,29 +15,34 @@ public class Combat : MonoBehaviour
     public float attackRate2 = 3f;
 
     public float nextAttackTime0 = 0f;
+    public float nextAttackTime1 = 0f;
+    public float nextAttackTime2 = 0f;
 
+    public AudioSource attack;
+    public AudioSource attack1;
+
+    void Start()
+    {
+        attack = GameObject.Find("attack").GetComponent<AudioSource>();
+        attack1 = GameObject.Find("attack1").GetComponent<AudioSource>();
+    }
 
     void Update()
-    {  
-        if (Time.time >= nextAttackTime0)
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextAttackTime0)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Attack0();
-                //nextAttackTime0 = Time.time + 1f / attackRate0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Attack1();
-                //nextAttackTime0 = Time.time + 1f / attackRate1;
-
-            }
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Attack2();
-                //nextAttackTime0 = Time.time + 1f / attackRate2;
-
-            }
+            Attack0();
+            nextAttackTime0 = Time.time + 0.5f / attackRate0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time >= nextAttackTime1)
+        {
+            Attack1();
+            nextAttackTime1 = Time.time + 1f / attackRate1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextAttackTime2)
+        {
+            Attack2();
+            nextAttackTime2 = Time.time + 5f / attackRate2;
         }
     }
 
@@ -48,6 +54,7 @@ public class Combat : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().TakeDamage(5);
         }
+        attack.Play();
     }
 
     void Attack1()
@@ -68,6 +75,8 @@ public class Combat : MonoBehaviour
         {
             enemy.GetComponent<Enemy>().TakeDamage(20);
         }
+
+        attack1.Play();
     }
 
     void OnDrawGizmosSelected()
@@ -77,3 +86,4 @@ public class Combat : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
+
